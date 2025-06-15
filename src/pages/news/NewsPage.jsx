@@ -46,7 +46,7 @@ const NewsPage = () => {
     }
     setNewsList(updatedNewsList);
     setMessage("Xóa bài viết thành công!");
-    navigator("/news/admin?deleteSuccess=true");
+    navigator("/apartments/admin?deleteSuccess=true");
   }
   return (
     <div className="">

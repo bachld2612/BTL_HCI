@@ -11,7 +11,7 @@ const Header = () => {
         <Link to="/" className="hover:text-black">Tìm kiếm</Link>
         <div className="flex  flex-row justify-around items-center gap-4">
             <Link to="/" className="hover:text-black">Trang chủ</Link>
-            <Link to="/" className="hover:text-black">Đặt phòng</Link>
+            <Link to="/apartments" className="hover:text-black">Đặt phòng</Link>
             <Link to="/news" className="hover:text-black">Tin tức</Link>
             <Link to="/" className="hover:text-black">Blog</Link>
         </div>

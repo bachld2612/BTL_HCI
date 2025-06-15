@@ -6,6 +6,10 @@ import PageNotFound from "../exceptions/PageNotFound";
 import CreateNewsPage from "../pages/news/CreateNewsPage";
 import NewsPageUser from "../pages/news/NewsPageUser";
 import UpdateNewsPage from "../pages/news/UpdateNewsPage";
+import ApartmentPage from "../pages/apartments/ApartmentsPage";
+import DetailApartment from "../pages/apartments/DetailApartment";
+import CreateApartment from "../pages/apartments/CreateApartment";
+import UpdateApartment from "../pages/apartments/UpdateApartment";
 
 export const routes = createBrowserRouter([
   {
@@ -17,7 +21,7 @@ export const routes = createBrowserRouter([
         children: [
           { index: true, element: <NewsPageUser /> },
           { path: "admin", element: <NewsPage /> },
-          {path: ":id", element: <DetailNewsPage />},
+          { path: ":id", element: <DetailNewsPage /> },
           {
             path: "admin/:id/edit",
             element: <UpdateNewsPage />,
@@ -26,6 +30,15 @@ export const routes = createBrowserRouter([
             path: "create",
             element: <CreateNewsPage />,
           },
+        ],
+      },
+      {
+        path: "apartments",
+        children: [
+          { index: true, element: <ApartmentPage /> },
+          { path: ":id", element: <DetailApartment /> },
+          { path: ":id/edit", element: <UpdateApartment /> },
+          { path: "create", element: <CreateApartment /> },
         ],
       },
       { path: "*", element: <PageNotFound /> },
