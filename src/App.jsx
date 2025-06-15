@@ -1,13 +1,9 @@
 import { useState } from 'react'
-
+import Header from '../src/components/Header'
+import { RouterProvider } from 'react-router-dom'
+import { routes } from './routes'
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div className='text-center'>TailwindCss</div>
-    </>
-  )
+  return <RouterProvider router={routes} />
 }
 
 export default App
