@@ -10,6 +10,7 @@ import ApartmentPage from "../pages/apartments/ApartmentsPage";
 import DetailApartment from "../pages/apartments/DetailApartment";
 import CreateApartment from "../pages/apartments/CreateApartment";
 import UpdateApartment from "../pages/apartments/UpdateApartment";
+import BlogPage from "../pages/blogs/BlogPage";
 
 export const routes = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ export const routes = createBrowserRouter([
           { path: ":id/edit", element: <UpdateApartment /> },
           { path: "create", element: <CreateApartment /> },
         ],
+      },
+      {
+        path: "blogs",
+        children: [{ index: true, element: <BlogPage /> }],
       },
       { path: "*", element: <PageNotFound /> },
     ],

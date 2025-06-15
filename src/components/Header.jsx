@@ -13,7 +13,7 @@ const Header = () => {
             <Link to="/" className="hover:text-black">Trang chủ</Link>
             <Link to="/apartments" className="hover:text-black">Đặt phòng</Link>
             <Link to="/news/admin" className="hover:text-black">Tin tức</Link>
-            <Link to="/" className="hover:text-black">Blog</Link>
+            <Link to="/blogs" className="hover:text-black">Blog</Link>
         </div>
       </div>
       <div className="flex flex-row justify-center items-center gap-2">
