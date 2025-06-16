@@ -1,6 +1,11 @@
 import React from "react";
 
-const HeartButton = ({ liked = false, onClick, likedNumber=0 }) => {
+const HeartButton = ({
+  liked = false,
+  onClick,
+  likedNumber = 0,
+  numberHidden = false,
+}) => {
   return (
     <div
       className="flex items-center cursor-pointer select-none"
@@ -22,7 +27,11 @@ const HeartButton = ({ liked = false, onClick, likedNumber=0 }) => {
           strokeLinejoin="round"
         />
       </svg>
-      <span className="text-black">{likedNumber}</span>
+      {!numberHidden && (
+        <span className="text-black ml-1">
+          {likedNumber > 0 ? likedNumber : ""}
+        </span>
+      )}
     </div>
   );
 };

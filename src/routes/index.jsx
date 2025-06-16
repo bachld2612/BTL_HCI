@@ -11,6 +11,7 @@ import DetailApartment from "../pages/apartments/DetailApartment";
 import CreateApartment from "../pages/apartments/CreateApartment";
 import UpdateApartment from "../pages/apartments/UpdateApartment";
 import BlogPage from "../pages/blogs/BlogPage";
+import DetailBlog from "../pages/blogs/DetailBlog";
 
 export const routes = createBrowserRouter([
   {
@@ -44,7 +45,10 @@ export const routes = createBrowserRouter([
       },
       {
         path: "blogs",
-        children: [{ index: true, element: <BlogPage /> }],
+        children: [
+          { index: true, element: <BlogPage /> },
+          { path: ":id", element: <DetailBlog /> },
+        ],
       },
       { path: "*", element: <PageNotFound /> },
     ],

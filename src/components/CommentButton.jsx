@@ -1,8 +1,8 @@
 import React from "react";
 
-const CommentButton = ({commentNumber = 0, onClick}) => {
+const CommentButton = ({ commentNumber = 0, onClick }) => {
   return (
-    <div className="flex items-center">
+    <div className="flex items-center hover:cursor-pointer" onClick={onClick}>
       <svg
         viewBox="0 0 24 24"
         width="28"
@@ -17,7 +17,7 @@ const CommentButton = ({commentNumber = 0, onClick}) => {
         <rect x="3" y="4" width="18" height="14" rx="3" />
         <polygon points="7,18 7,21 12,18" />
       </svg>
-      <span className="text-black">{commentNumber}</span>
+      <span className="text-black ml-1">{commentNumber}</span>
     </div>
   );
 };
