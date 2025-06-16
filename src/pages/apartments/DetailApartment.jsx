@@ -42,7 +42,7 @@ const DetailApartment = () => {
           </div>
           <div className="w-full bg-white rounded-xl my-4 text-justify">
             <b>Giá: </b>
-            {currentNews.price} VNĐ
+            {currentNews.price}
           </div>
           <div className="font-bold text-green-700 w-full bg-white rounded-xl my-4 text-justify"><b className="text-black">Tình trạng: </b>{currentNews.state}</div>
         </div>

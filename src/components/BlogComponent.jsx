@@ -21,8 +21,8 @@ const BlogComponent = ({ blog }) => {
       </div>
       <div className="w-4/5 text-[14px] flex flex-col align-start justify-center text-justify">
         <div className="mb-3">{blog.hightlight}</div>
-        <div className="text-[16px] font-semibold mb-2">{blog.title}</div>
-        <div className="">{blog.description}</div>
+        <div className="text-[20px] font-semibold mb-2">{blog.title}</div>
+        <div className="line-clamp-3 h-35">{blog.description}</div>
         <div className="flex flex-row justify-end items-center gap-29 mt-3">
           <div className="flex flex-row justify-center items-center gap-10">
             <HeartButton

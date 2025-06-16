@@ -5,6 +5,7 @@ import AddressBar from "../../components/AddressBar";
 import { Container } from "@mui/material";
 import banner from "../../assets/images/soha_banner.png";
 import BackButton from "../../components/BackButton";
+import newsImg from "../../assets/images/news_img.png";
 const DetailNewsPage = () => {
   const { id } = useParams();
   const currentNews = news.find((news) => news.id == id);
@@ -28,6 +29,10 @@ const DetailNewsPage = () => {
         <h1 className="text-center my-5 font-bold uppercase text-[30px]">
           {currentNews ? currentNews.title : "Chi tiết tin tức"}
         </h1>
+
+        <div className="flex justify-center items-center">
+          <img className="w-[400px] " src={newsImg} alt="" />
+        </div>
 
         <div className="flex justify-center">
           <div className="w-full bg-white rounded-xl p-6 text-justify">
