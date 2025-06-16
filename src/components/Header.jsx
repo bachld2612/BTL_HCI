@@ -8,12 +8,22 @@ const Header = () => {
       <img className="w-1/12 h-20" src={logo} alt="" />
 
       <div className="flex flex-row justify-around gap-50 text-gray-500 ">
-        <Link to="/" className="hover:text-black">Tìm kiếm</Link>
+        <Link to="/" className="hover:text-black">
+          Tìm kiếm
+        </Link>
         <div className="flex  flex-row justify-around items-center gap-4">
-            <Link to="/" className="hover:text-black">Trang chủ</Link>
-            <Link to="/apartments" className="hover:text-black">Đặt phòng</Link>
-            <Link to="/news/admin" className="hover:text-black">Tin tức</Link>
-            <Link to="/blogs" className="hover:text-black">Blog</Link>
+          <Link to="/bookings" className="hover:text-black">
+            Trang chủ
+          </Link>
+          <Link to="/apartments" className="hover:text-black">
+            Đặt phòng
+          </Link>
+          <Link to="/news/admin" className="hover:text-black">
+            Tin tức
+          </Link>
+          <Link to="/blogs" className="hover:text-black">
+            Blog
+          </Link>
         </div>
       </div>
       <div className="flex flex-row justify-center items-center gap-2">
