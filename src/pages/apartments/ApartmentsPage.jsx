@@ -4,7 +4,7 @@ import AddressBar from "../../components/AddressBar";
 import CreateButton from "../../components/CreateButton";
 import LoadMoreButton from "../../components/LoadMoreButton";
 import { Container } from "@mui/material";
-import banner from "../../assets/images/soha_banner.png";
+import banner from "../../assets/images/soha_banner_apartments.jpg";
 import { apartments } from "../../data/Apartments";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import checkmark from "../../assets/images/checkmark.png";
@@ -37,6 +37,88 @@ const ApartmentPage = () => {
   const contentType = "phòng";
   const [apartmentsList, setApartmentsList] = useState(apartments);
 
+  const [selectedTypes, setSelectedTypes] = useState([]);
+  const [selectedStates, setSelectedStates] = useState([]);
+  const [selectedTimes, setSelectedTimes] = useState([]);
+  const [selectedPrices, setSelectedPrices] = useState([]);
+
+  const handleCheckboxChange = (value, selectedList, setSelectedList) => {
+    if (selectedList.includes(value)) {
+      setSelectedList(selectedList.filter((item) => item !== value));
+    } else {
+      setSelectedList([...selectedList, value]);
+    }
+  };
+
+  const convertTimeToDays = (timeStr) => {
+    const numberMatch = timeStr.match(/\d+/); // Lấy số đầu tiên xuất hiện
+    if (!numberMatch) return 0;
+
+    const number = parseInt(numberMatch[0]);
+
+    if (timeStr.includes("ngày")) return number;
+    if (timeStr.includes("tuần")) return number * 7;
+    if (timeStr.includes("tháng")) return number * 30;
+    return number;
+  };
+
+  const isTimeInRange = (itemTime, rangeLabel) => {
+    const itemDays = convertTimeToDays(itemTime);
+
+    if (rangeLabel === "1 ngày") return itemDays === 1;
+    if (rangeLabel === "2 - 7 ngày") return itemDays >= 2 && itemDays <= 7;
+    if (rangeLabel === "Trên 7 ngày") return itemDays > 7;
+
+    return false;
+  };
+
+  const handleSearch = () => {
+    console.log(
+      "DEBUG TIME VALUES:",
+      apartments.map((a) => a.time)
+    );
+
+    const filtered = apartments.filter((item) => {
+      const matchType =
+        selectedTypes.length === 0 ||
+        selectedTypes.some(
+          (type) =>
+            item.title.toLowerCase().includes(type.toLowerCase()) ||
+            item.description.toLowerCase().includes(type.toLowerCase())
+        );
+
+      const matchState =
+        selectedStates.length === 0 ||
+        selectedStates.some((stateLabel) =>
+          item.state.toLowerCase().includes(stateLabel.toLowerCase())
+        );
+
+      const itemTimeDays = convertTimeToDays(item.time);
+
+      const matchTime =
+        selectedTimes.length === 0 ||
+        selectedTimes.some((timeLabel) => isTimeInRange(item.time, timeLabel));
+
+      const priceNumber = parseInt(item.price.toString().replace(/\D/g, ""));
+
+      let matchPrice = false;
+      if (selectedPrices.length === 0) {
+        matchPrice = true;
+      } else {
+        matchPrice = selectedPrices.some((priceRange) => {
+          if (priceRange === "Dưới 500.000 VNĐ") return priceNumber < 500000;
+          if (priceRange === "500.000 - 1.000.000 VNĐ")
+            return priceNumber >= 500000 && priceNumber <= 1000000;
+          if (priceRange === "Trên 1.000.000 VNĐ") return priceNumber > 1000000;
+          return false;
+        });
+      }
+
+      return matchType && matchState && matchTime && matchPrice;
+    });
+    setApartmentsList(filtered);
+  };
+
   const handleDelete = (id) => {
     const updatedApartmentsList = apartmentsList.filter(
       (item) => item.id !== id
@@ -50,8 +132,10 @@ const ApartmentPage = () => {
     navigator("/apartments?deleteSuccess=true");
   };
   return (
-    <div className="">
-      <img src={banner} className="w-screen h-80" alt="" />
+    <div>
+      <div className="h-[556px] overflow-hidden">
+        <img src={banner} alt="" className="w-full object-cover" />
+      </div>
       <Container sx={{ marginBottom: "30px" }}>
         <div className="my-5">
           <AddressBar addresses={addresses} />
@@ -108,15 +192,45 @@ const ApartmentPage = () => {
                 <div className="font-bold mb-2">Loại phòng</div>
                 <div className="flex flex-col gap-2">
                   <label className="flex items-center gap-2">
-                    <input type="checkbox" className="form-checkbox" />
+                    <input
+                      type="checkbox"
+                      className="form-checkbox"
+                      onChange={() =>
+                        handleCheckboxChange(
+                          "Phòng đơn",
+                          selectedTypes,
+                          setSelectedTypes
+                        )
+                      }
+                    />
                     Phòng đơn
                   </label>
                   <label className="flex items-center gap-2">
-                    <input type="checkbox" className="form-checkbox" />
+                    <input
+                      type="checkbox"
+                      className="form-checkbox"
+                      onChange={() =>
+                        handleCheckboxChange(
+                          "Phòng đôi",
+                          selectedTypes,
+                          setSelectedTypes
+                        )
+                      }
+                    />
                     Phòng đôi
                   </label>
                   <label className="flex items-center gap-2">
-                    <input type="checkbox" className="form-checkbox" />
+                    <input
+                      type="checkbox"
+                      className="form-checkbox"
+                      onChange={() =>
+                        handleCheckboxChange(
+                          "Phòng tập thể",
+                          selectedTypes,
+                          setSelectedTypes
+                        )
+                      }
+                    />
                     Phòng tập thể
                   </label>
                 </div>
@@ -127,15 +241,45 @@ const ApartmentPage = () => {
                 <div className="font-bold mb-2">Tình trạng phòng</div>
                 <div className="flex flex-col gap-2">
                   <label className="flex items-center gap-2">
-                    <input type="checkbox" className="form-checkbox" />
+                    <input
+                      type="checkbox"
+                      className="form-checkbox"
+                      onChange={() =>
+                        handleCheckboxChange(
+                          "Còn trống",
+                          selectedStates,
+                          setSelectedStates
+                        )
+                      }
+                    />
                     Còn trống
                   </label>
                   <label className="flex items-center gap-2">
-                    <input type="checkbox" className="form-checkbox" />
+                    <input
+                      type="checkbox"
+                      className="form-checkbox"
+                      onChange={() =>
+                        handleCheckboxChange(
+                          "Đã đặt",
+                          selectedStates,
+                          setSelectedStates
+                        )
+                      }
+                    />
                     Đã đặt
                   </label>
                   <label className="flex items-center gap-2">
-                    <input type="checkbox" className="form-checkbox" />
+                    <input
+                      type="checkbox"
+                      className="form-checkbox"
+                      onChange={() =>
+                        handleCheckboxChange(
+                          "Sắp trả",
+                          selectedStates,
+                          setSelectedStates
+                        )
+                      }
+                    />
                     Sắp trả
                   </label>
                 </div>
@@ -146,14 +290,45 @@ const ApartmentPage = () => {
                 <div className="font-bold mb-2">Thời gian</div>
                 <div className="flex flex-col gap-2">
                   <label className="flex items-center gap-2">
-                    <input type="checkbox" className="form-checkbox" />1 ngày
+                    <input
+                      type="checkbox"
+                      className="form-checkbox"
+                      onChange={() =>
+                        handleCheckboxChange(
+                          "1 ngày",
+                          selectedTimes,
+                          setSelectedTimes
+                        )
+                      }
+                    />
+                    1 ngày
                   </label>
                   <label className="flex items-center gap-2">
-                    <input type="checkbox" className="form-checkbox" />2 - 7
-                    ngày
+                    <input
+                      type="checkbox"
+                      className="form-checkbox"
+                      onChange={() =>
+                        handleCheckboxChange(
+                          "2 - 7 ngày",
+                          selectedTimes,
+                          setSelectedTimes
+                        )
+                      }
+                    />
+                    2 - 7 ngày
                   </label>
                   <label className="flex items-center gap-2">
-                    <input type="checkbox" className="form-checkbox" />
+                    <input
+                      type="checkbox"
+                      className="form-checkbox"
+                      onChange={() =>
+                        handleCheckboxChange(
+                          "Trên 7 ngày",
+                          selectedTimes,
+                          setSelectedTimes
+                        )
+                      }
+                    />
                     Trên 7 ngày
                   </label>
                 </div>
@@ -164,22 +339,63 @@ const ApartmentPage = () => {
                 <div className="font-bold mb-2">Giá cả</div>
                 <div className="flex flex-col gap-2">
                   <label className="flex items-center gap-2">
-                    <input type="checkbox" className="form-checkbox" />
-                    Dưới 500 000 VNĐ
+                    <input
+                      type="checkbox"
+                      className="form-checkbox"
+                      onChange={() =>
+                        handleCheckboxChange(
+                          "Dưới 500.000 VNĐ",
+                          selectedPrices,
+                          setSelectedPrices
+                        )
+                      }
+                    />
+                    Dưới 500.000 VNĐ
                   </label>
                   <label className="flex items-center gap-2">
-                    <input type="checkbox" className="form-checkbox" />
-                    500 000 - 1 000 000 VNĐ
+                    <input
+                      type="checkbox"
+                      className="form-checkbox"
+                      onChange={() =>
+                        handleCheckboxChange(
+                          "500.000 - 1.000.000 VNĐ",
+                          selectedPrices,
+                          setSelectedPrices
+                        )
+                      }
+                    />
+                    500.000 - 1.000.000 VNĐ
                   </label>
                   <label className="flex items-center gap-2">
-                    <input type="checkbox" className="form-checkbox" />
-                    Trên 1 000 000 VNĐ
+                    <input
+                      type="checkbox"
+                      className="form-checkbox"
+                      onChange={() =>
+                        handleCheckboxChange(
+                          "Trên 1.000.000 VNĐ",
+                          selectedPrices,
+                          setSelectedPrices
+                        )
+                      }
+                    />
+                    Trên 1.000.000 VNĐ
                   </label>
                 </div>
               </div>
             </div>
             <div className="my-10">
-              <LoadMoreButton content="Tìm kiếm" />
+              <LoadMoreButton content="Tìm kiếm" onClick={handleSearch} />
+            </div>
+            <div
+              style={{
+                marginTop: "10px",
+                marginBottom: "25px",
+                paddingLeft: "16px",
+              }}
+            >
+              <h2 style={{ fontWeight: "bold", fontSize: "30px" }}>
+                Danh sách các phòng
+              </h2>
             </div>
           </div>
         )}

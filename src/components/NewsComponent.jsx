@@ -12,7 +12,7 @@ const NewsComponent = ({
   updateNavigate,
   detailNavigate,
   onDelete,
-  img=newsImage,
+  img = newsImage,
 }) => {
   const [open, setOpen] = React.useState(false);
   const onClose = () => {
@@ -36,11 +36,13 @@ const NewsComponent = ({
         <div className="text-center font-semibold my-2 uppercase">
           {status.title}
         </div>
-        {status.address && <div className="flex flex-row justify-start items-center mb-2 self-start">
-          <img src={address} className="mr-2 max-w-4 max-h-4" alt="" />
-          <span className="">{status.address}</span>  
-        </div>}
-        <div className="">{status.description}</div>
+        {status.address && (
+          <div className="flex flex-row justify-start items-center mb-2 self-start">
+            <img src={address} className="mr-2 max-w-4 max-h-4" alt="" />
+            <span className="line-clamp-1 ">{status.address}</span>
+          </div>
+        )}
+        <div className="h-20 line-clamp-3">{status.description}</div>
         {isAdmin ? (
           <div className="flex flex-row justify-between items-center w-full mt-2">
             <div className="flex flex-row justify-between items-center gap-1 text-sm">
